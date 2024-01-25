@@ -16,6 +16,7 @@ with open('config.json', 'r') as f: DATA = json.load(f)
 def getenv(var): return os.environ.get(var) or DATA.get(var, None)
 
 bot_token = getenv("TOKEN") 
+MUST_JOIN = getenv("MUST_JOIN")
 api_hash = getenv("HASH") 
 api_id = getenv("ID")
 bot = Client("mybot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
