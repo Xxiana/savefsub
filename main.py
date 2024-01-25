@@ -100,7 +100,7 @@ def subcribe(func):
             message.reply(
                 f"Saya bukan admin di chat MUST_JOIN chat : {MUST_JOIN} !"
             )
-        return await func(_, message)
+        return func(_, message)
 
     return wrapper
 	
