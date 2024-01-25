@@ -83,7 +83,7 @@ def subcribe(func):
                     yuhu = "https://t.me/" + MUST_JOIN
                 else:
                     chat_info = bot.get_chat(MUST_JOIN)
-                    chat_info.invite_link
+                    yuhu = chat_info.invite_link
                 try:
                     message.reply(
                         f"**Hallo {rpk}. Agar Bisa Menggunakan Bot Anda Harus Masuk Ke Channel Terlebih Dahulu!. Silahkan Klik Tombol Di Bawah Untuk Join.**",
