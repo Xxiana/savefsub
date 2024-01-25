@@ -2,6 +2,10 @@ import pyrogram
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.errors import ChatAdminRequired, ChatWriteForbidden, UserNotParticipant
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+
+from config import MUST_JOIN
 
 import time
 import os
@@ -62,14 +66,52 @@ def progress(current, total, message, type):
 		fileup.write(f"{current * 100 / total:.1f}%")
 
 
+
+
+def subcribe(func):
+    def wrapper(_, message: Message):
+        user_id = message.from_user.id
+        user_name = message.from_user.first_name
+        rpk = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+        if not MUST_JOIN:  # Not compulsory
+            return
+        try:
+            try:
+                bot.get_chat_member(MUST_JOIN, message.from_user.id)
+            except UserNotParticipant:
+                if MUST_JOIN.isalpha():
+                    yuhu = "https://t.me/" + MUST_JOIN
+                else:
+                    chat_info = bot.get_chat(MUST_JOIN)
+                    chat_info.invite_link
+                try:
+                    message.reply(
+                        f"**Hallo {rpk}. Agar Bisa Menggunakan Bot Anda Harus Masuk Ke Channel Terlebih Dahulu!. Silahkan Klik Tombol Di Bawah Untuk Join.**",
+                        disable_web_page_preview=True,
+                        reply_markup=InlineKeyboardMarkup(
+                            [[InlineKeyboardButton("💌 Join Channel Bot", url=yuhu)]]
+                        ),
+                    )
+                    message.stop_propagation()
+                except ChatWriteForbidden:
+                    pass
+        except ChatAdminRequired:
+            message.reply(
+                f"Saya bukan admin di chat MUST_JOIN chat : {MUST_JOIN} !"
+            )
+        return await func(_, message)
+
+    return wrapper
+	
 # start command
 @bot.on_message(filters.command(["start"]))
+@subcribe
 def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-	bot.send_message(message.chat.id, f"__👋 Hi **{message.from_user.mention}**, I am Save Restricted Bot, I can send you restricted content by it's post link__\n\n{USAGE}",
-	reply_markup=InlineKeyboardMarkup([[ InlineKeyboardButton("🌐 Source Code", url="https://github.com/bipinkrish/Save-Restricted-Bot")]]), reply_to_message_id=message.id)
+	bot.send_message(message.chat.id, f"{USAGE}")
 
 
 @bot.on_message(filters.text)
+@subcribe
 def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
 	print(message.text)
 
@@ -247,36 +289,25 @@ def get_message_type(msg: pyrogram.types.messages_and_media.message.Message):
 	except: pass
 
 
-USAGE = """**FOR PUBLIC CHATS**
+USAGE = """
+🚀 Halo aku bot save konten silahkan kirim link konten nya, pastikan akun mu join di grup/channel Tersebut.
 
-__just send post/s link__
 
-**FOR PRIVATE CHATS**
+<b>Media dari Bot</b>
 
-__first send invite link of the chat (unnecessary if the account of string session already member of the chat)
-then send post/s link__
+kirim tautan dengan '/b/', nama pengguna bot dan id pesan
 
-**FOR BOT CHATS**
-
-__send link with '/b/', bot's username and message id, you might want to install some unofficial client to get the id like below__
-
-```
 https://t.me/b/botusername/4321
-```
 
-**MULTI POSTS**
 
-__send public/private posts link as explained above with formate "from - to" to send multiple messages like below__
+<b>Batch Download/Download sekaligus</b>
 
-```
+kirim link postingan publik/pribadi seperti yang dijelaskan di atas dengan format "dari - ke" untuk mengirim banyak pesan seperti di bawah
+
 https://t.me/xxxx/1001-1010
 
 https://t.me/c/xxxx/101 - 120
-```
-
-__note that space in between doesn't matter__
 """
-
 
 # infinty polling
 bot.run()
