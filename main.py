@@ -105,7 +105,7 @@ def subcribe(func):
 	
 # start command
 @bot.on_message(filters.command(["start"]))
-@subcribe
+#@subcribe
 def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
 	bot.send_message(message.chat.id, f"{USAGE}")
 
