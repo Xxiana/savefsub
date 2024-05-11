@@ -108,7 +108,14 @@ def subcribe(func):
 #@subcribe
 def send_start(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
 	bot.send_message(message.chat.id, f"{USAGE}")
-
+	
+@bot.on_message(filters.command("restart"))
+def restart(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+    try:
+        bot.send_message(message.chat.id, "✅ restarted...")
+        os.system(f"kill -9 {os.getpid()} && python3 main.py")
+    except Exception as e:
+        bot.send_message(message.chat.id, str(e))
 
 @bot.on_message(filters.text)
 @subcribe
