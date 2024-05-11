@@ -317,4 +317,5 @@ https://t.me/c/xxxx/101 - 120
 """
 
 # infinty polling
+print(f"{bot.me.username} aktif")
 bot.run()
