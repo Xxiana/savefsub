@@ -20,6 +20,7 @@ api_hash = getenv("HASH")
 api_id = getenv("ID")
 bot = Client("mybot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
+anu = bot.get.me()
 ss = getenv("STRING")
 if ss is not None:
 	acc = Client("myacc" ,api_id=api_id, api_hash=api_hash, session_string=ss)
@@ -317,5 +318,5 @@ https://t.me/c/xxxx/101 - 120
 """
 
 # infinty polling
-print(f"{bot.me.first_name}")
+print(f"{anu.username}")
 bot.run()
