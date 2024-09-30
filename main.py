@@ -94,14 +94,6 @@ def subcribe(func):
     return wrapper
 
 # display bot name
-def display_bot_name():
-    while True:
-        try:
-            bot_info = bot.get_me()
-            print(f"Bot is running as {bot_info.first_name} (@{bot_info.username})")
-        except Exception as e:
-            print(f"Failed to get bot info: {e}")
-        time.sleep(60)  # Display every 60 seconds
 
 # start command
 @bot.on_message(filters.command(["start"]))
@@ -312,7 +304,7 @@ https://t.me/c/xxxx/101 - 120
 """
 
 # Start the bot name display thread
-threading.Thread(target=display_bot_name, daemon=True).start()
+#threading.Thread(target=display_bot_name, daemon=True).start()
 
 # Infinity polling
 bot.run()
