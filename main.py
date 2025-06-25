@@ -16,13 +16,8 @@ bot_token = getenv("TOKEN")
 MUST_JOIN = getenv("MUST_JOIN")
 api_hash = getenv("HASH") 
 api_id = getenv("ID")
-try:
-    bot = Client("mybot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
-    bot.start()
-    print (bot.me.username)
-except:
-    print("error")
-    
+
+bot = Client("mybot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 ss = getenv("STRING")
 if ss is not None:
     acc = Client("myacc", api_id=api_id, api_hash=api_hash, session_string=ss)
