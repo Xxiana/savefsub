@@ -16,8 +16,13 @@ bot_token = getenv("TOKEN")
 MUST_JOIN = getenv("MUST_JOIN")
 api_hash = getenv("HASH") 
 api_id = getenv("ID")
-bot = Client("mybot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
-
+try:
+    bot = Client("mybot", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
+    bot.start()
+    print (bot.me.username)
+except:
+    print("error")
+    
 ss = getenv("STRING")
 if ss is not None:
     acc = Client("myacc", api_id=api_id, api_hash=api_hash, session_string=ss)
@@ -306,9 +311,4 @@ https://t.me/c/xxxx/101 - 120
 
 
 
-async def mek():
-    bot.start()
-    me = bot.get_me()
-    print(f"🤖 Bot Aktif: @{me.username}")
-    idle()
-    
+bot.run()
