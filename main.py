@@ -310,5 +310,5 @@ async def mek():
     bot.start()
     me = bot.get_me()
     print(f"🤖 Bot Aktif: @{me.username}")
-    bot.idle()
+    idle()
     
