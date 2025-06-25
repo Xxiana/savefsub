@@ -307,13 +307,8 @@ https://t.me/c/xxxx/101 - 120
 
 
 async def mek():
-    await bot.start()
-    me = await bot.get_me()
+    bot.start()
+    me = bot.get_me()
     print(f"🤖 Bot Aktif: @{me.username}")
-    await idle()
+    bot.idle()
     
-if __name__ == "__main__":
-    try:
-        asyncio.run(mek())
-    except Exception as e:
-        print(e)
