@@ -303,8 +303,9 @@ https://t.me/xxxx/1001-1010
 https://t.me/c/xxxx/101 - 120
 """
 
-# Start the bot name display thread
-#threading.Thread(target=display_bot_name, daemon=True).start()
 
-# Infinity polling
-bot.run()
+if __name__ == "__main__":
+    bot.start()
+    me = bot.get_me()
+    print(f"🤖 Bot Aktif: @{me.username}")
+    bot.run()
