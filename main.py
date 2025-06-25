@@ -305,7 +305,7 @@ https://t.me/c/xxxx/101 - 120
 
 
 if __name__ == "__main__":
-    bot.start()
-    me = bot.get_me()
-    print(f"🤖 Bot Aktif: @{me.username}")
-    
+    with bot:
+        me = bot.get_me()
+        print(f"🤖 Bot Aktif: @{me.username}")
+        bot.run()
