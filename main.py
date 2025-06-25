@@ -1,5 +1,5 @@
 import pyrogram
-from pyrogram import Client, filters
+from pyrogram import Client, filters, idle
 from pyrogram.errors import UserAlreadyParticipant, InviteHashExpired, UsernameNotOccupied
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from pyrogram.errors import ChatAdminRequired, ChatWriteForbidden, UserNotParticipant
@@ -7,6 +7,7 @@ import time
 import os
 import threading
 import json
+import asyncio
 
 with open('config.json', 'r') as f: DATA = json.load(f)
 def getenv(var): return os.environ.get(var) or DATA.get(var, None)
@@ -304,8 +305,12 @@ https://t.me/c/xxxx/101 - 120
 """
 
 
+
+async def main():
+    await bot.start()
+    me = await bot.get_me()
+    print(f"🤖 Bot Aktif: @{me.username}")
+    await idle()
+    
 if __name__ == "__main__":
-    with bot:
-        me = bot.get_me()
-        print(f"🤖 Bot Aktif: @{me.username}")
-        bot.run()
+    asyncio.run(main())
